@@ -15,6 +15,9 @@ const (
 
 	// MemStoreKey defines the in-memory store key
 	MemStoreKey = "mem_acre"
+
+	LocValueKey = "Loc-value-"
+	LocCountKey = "Loc-count-"
 )
 
 func KeyPrefix(p string) []byte {

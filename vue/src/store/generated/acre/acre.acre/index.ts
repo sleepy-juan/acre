@@ -1,10 +1,11 @@
 import { txClient, queryClient, MissingWalletError , registry} from './module'
 
+import { Loc } from "./module/types/acre/loc"
 import { Params } from "./module/types/acre/params"
 import { Whatis } from "./module/types/acre/whatis"
 
 
-export { Params, Whatis };
+export { Loc, Params, Whatis };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -45,8 +46,12 @@ const getDefaultState = () => {
 				Params: {},
 				Whatis: {},
 				WhatisAll: {},
+				Contracts: {},
+				Loc: {},
+				LocAll: {},
 				
 				_Structure: {
+						Loc: getStructure(Loc.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
 						Whatis: getStructure(Whatis.fromPartial({})),
 						
@@ -94,6 +99,24 @@ export default {
 						(<any> params).query=null
 					}
 			return state.WhatisAll[JSON.stringify(params)] ?? {}
+		},
+				getContracts: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.Contracts[JSON.stringify(params)] ?? {}
+		},
+				getLoc: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.Loc[JSON.stringify(params)] ?? {}
+		},
+				getLocAll: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.LocAll[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -199,21 +222,76 @@ export default {
 		},
 		
 		
-		async sendMsgCreateContract({ rootGetters }, { value, fee = [], memo = '' }) {
+		
+		
+		 		
+		
+		
+		async QueryContracts({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
 			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgCreateContract(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryContracts()).data
+				
+					
+				commit('QUERY', { query: 'Contracts', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryContracts', payload: { options: { all }, params: {...key},query }})
+				return getters['getContracts']( { params: {...key}, query}) ?? {}
 			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateContract:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgCreateContract:Send Could not broadcast Tx: '+ e.message)
-				}
+				throw new Error('QueryClient:QueryContracts API Node Unavailable. Could not perform query: ' + e.message)
+				
 			}
 		},
+		
+		
+		
+		
+		 		
+		
+		
+		async QueryLoc({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryLoc( key.index)).data
+				
+					
+				commit('QUERY', { query: 'Loc', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryLoc', payload: { options: { all }, params: {...key},query }})
+				return getters['getLoc']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryLoc API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		
+		
+		 		
+		
+		
+		async QueryLocAll({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryLocAll(query)).data
+				
+					
+				while (all && (<any> value).pagination && (<any> value).pagination.next_key!=null) {
+					let next_values=(await queryClient.queryLocAll({...query, 'pagination.key':(<any> value).pagination.next_key})).data
+					value = mergeResults(value, next_values);
+				}
+				commit('QUERY', { query: 'LocAll', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryLocAll', payload: { options: { all }, params: {...key},query }})
+				return getters['getLocAll']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryLocAll API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
 		async sendMsgInitContract({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -229,20 +307,22 @@ export default {
 				}
 			}
 		},
-		
-		async MsgCreateContract({ rootGetters }, { value }) {
+		async sendMsgCreateContract({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
 				const msg = await txClient.msgCreateContract(value)
-				return msg
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
 					throw new Error('TxClient:MsgCreateContract:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgCreateContract:Create Could not create message: ' + e.message)
+				}else{
+					throw new Error('TxClient:MsgCreateContract:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
+		
 		async MsgInitContract({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -253,6 +333,19 @@ export default {
 					throw new Error('TxClient:MsgInitContract:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgInitContract:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgCreateContract({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgCreateContract(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateContract:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgCreateContract:Create Could not create message: ' + e.message)
 				}
 			}
 		},

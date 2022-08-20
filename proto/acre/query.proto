@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "acre/params.proto";
 import "acre/whatis.proto";
+import "acre/loc.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "acre/x/acre/types";
@@ -24,6 +25,21 @@ service Query {
 	// Queries a list of Whatis items.
 	rpc WhatisAll(QueryAllWhatisRequest) returns (QueryAllWhatisResponse) {
 		option (google.api.http).get = "/acre/acre/whatis";
+	}
+
+// Queries a list of Contracts items.
+	rpc Contracts(QueryContractsRequest) returns (QueryContractsResponse) {
+		option (google.api.http).get = "/acre/acre/contracts";
+	}
+
+// Queries a Loc by index.
+	rpc Loc(QueryGetLocRequest) returns (QueryGetLocResponse) {
+		option (google.api.http).get = "/acre/acre/loc/{index}";
+	}
+
+	// Queries a list of Loc items.
+	rpc LocAll(QueryAllLocRequest) returns (QueryAllLocResponse) {
+		option (google.api.http).get = "/acre/acre/loc";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -53,6 +69,37 @@ message QueryAllWhatisRequest {
 
 message QueryAllWhatisResponse {
 	repeated Whatis whatis = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryContractsRequest {
+}
+
+message QueryContractsResponse {
+  string addr = 1;
+  string owner = 2;
+  string buyer = 3;
+  string price1 = 4;
+  string price2 = 5;
+  string price3 = 6;
+  string status = 7;
+}
+
+message QueryGetLocRequest {
+	  string index = 1;
+
+}
+
+message QueryGetLocResponse {
+	Loc loc = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllLocRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllLocResponse {
+	repeated Loc loc = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

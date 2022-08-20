@@ -1,0 +1,18 @@
+syntax = "proto3";
+package acre.acre;
+
+option go_package = "acre/x/acre/types";
+
+message Loc {
+  string index = 1; 
+  string cid = 2; 
+  string addr = 3; 
+  string owner = 4; 
+  string buyer = 5; 
+  string price1 = 6; 
+  string price2 = 7; 
+  string price3 = 8; 
+  string status = 9; 
+  
+}
+

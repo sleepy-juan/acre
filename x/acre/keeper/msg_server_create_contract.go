@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+	"strconv"
 
 	"acre/x/acre/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -11,7 +12,8 @@ import (
 func (k msgServer) CreateContract(goCtx context.Context, msg *types.MsgCreateContract) (*types.MsgCreateContractResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	_, isFound := k.GetWhatis(ctx, msg.Addr)
+	_, isFound := k.GetLocWithAddr(ctx, msg.Addr)
+	count := k.GetLocCount(ctx)
 
 	if isFound {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Property already exists.")
@@ -21,8 +23,9 @@ func (k msgServer) CreateContract(goCtx context.Context, msg *types.MsgCreateCon
 
 		k.bankKeeper.SendCoinsFromAccountToModule(ctx, owner, types.ModuleName, price1)
 
-		newWhatis := types.Whatis {
-			Index:  msg.Addr,
+		newLoc := types.Loc{
+			Index:  strconv.Itoa(int(count)),
+			Cid: strconv.Itoa(int(count)),
 			Addr:   msg.Addr,
 			Owner:  owner.String(),
 			Buyer:  "",
@@ -32,7 +35,8 @@ func (k msgServer) CreateContract(goCtx context.Context, msg *types.MsgCreateCon
 			Status: "0",
 		}
 
-		k.SetWhatis(ctx, newWhatis)
+		k.SetLoc(ctx, newLoc)
+		k.SetLocCount(ctx, count+1)
 	}
 
 	return &types.MsgCreateContractResponse{}, nil

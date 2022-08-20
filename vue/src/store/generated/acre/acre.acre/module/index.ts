@@ -4,13 +4,13 @@ import { StdFee } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
-import { MsgCreateContract } from "./types/acre/tx";
 import { MsgInitContract } from "./types/acre/tx";
+import { MsgCreateContract } from "./types/acre/tx";
 
 
 const types = [
-  ["/acre.acre.MsgCreateContract", MsgCreateContract],
   ["/acre.acre.MsgInitContract", MsgInitContract],
+  ["/acre.acre.MsgCreateContract", MsgCreateContract],
   
 ];
 export const MissingWalletError = new Error("wallet is required");
@@ -43,8 +43,8 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
 
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
-    msgCreateContract: (data: MsgCreateContract): EncodeObject => ({ typeUrl: "/acre.acre.MsgCreateContract", value: MsgCreateContract.fromPartial( data ) }),
     msgInitContract: (data: MsgInitContract): EncodeObject => ({ typeUrl: "/acre.acre.MsgInitContract", value: MsgInitContract.fromPartial( data ) }),
+    msgCreateContract: (data: MsgCreateContract): EncodeObject => ({ typeUrl: "/acre.acre.MsgCreateContract", value: MsgCreateContract.fromPartial( data ) }),
     
   };
 };

@@ -9,6 +9,18 @@
  * ---------------------------------------------------------------
  */
 
+export interface AcreLoc {
+  index?: string;
+  cid?: string;
+  addr?: string;
+  owner?: string;
+  buyer?: string;
+  price1?: string;
+  price2?: string;
+  price3?: string;
+  status?: string;
+}
+
 export type AcreMsgCreateContractResponse = object;
 
 export type AcreMsgInitContractResponse = object;
@@ -17,6 +29,21 @@ export type AcreMsgInitContractResponse = object;
  * Params defines the parameters for the module.
  */
 export type AcreParams = object;
+
+export interface AcreQueryAllLocResponse {
+  loc?: AcreLoc[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
 
 export interface AcreQueryAllWhatisResponse {
   whatis?: AcreWhatis[];
@@ -31,6 +58,20 @@ export interface AcreQueryAllWhatisResponse {
    *  }
    */
   pagination?: V1Beta1PageResponse;
+}
+
+export interface AcreQueryContractsResponse {
+  addr?: string;
+  owner?: string;
+  buyer?: string;
+  price1?: string;
+  price2?: string;
+  price3?: string;
+  status?: string;
+}
+
+export interface AcreQueryGetLocResponse {
+  loc?: AcreLoc;
 }
 
 export interface AcreQueryGetWhatisResponse {
@@ -326,6 +367,64 @@ export class HttpClient<SecurityDataType = unknown> {
  * @version version not set
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryContracts
+   * @summary Queries a list of Contracts items.
+   * @request GET:/acre/acre/contracts
+   */
+  queryContracts = (params: RequestParams = {}) =>
+    this.request<AcreQueryContractsResponse, RpcStatus>({
+      path: `/acre/acre/contracts`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryLocAll
+   * @summary Queries a list of Loc items.
+   * @request GET:/acre/acre/loc
+   */
+  queryLocAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<AcreQueryAllLocResponse, RpcStatus>({
+      path: `/acre/acre/loc`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryLoc
+   * @summary Queries a Loc by index.
+   * @request GET:/acre/acre/loc/{index}
+   */
+  queryLoc = (index: string, params: RequestParams = {}) =>
+    this.request<AcreQueryGetLocResponse, RpcStatus>({
+      path: `/acre/acre/loc/${index}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
   /**
    * No description
    *

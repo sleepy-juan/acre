@@ -4,6 +4,7 @@ package acre.acre;
 import "gogoproto/gogo.proto";
 import "acre/params.proto";
 import "acre/whatis.proto";
+import "acre/loc.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "acre/x/acre/types";
@@ -12,5 +13,6 @@ option go_package = "acre/x/acre/types";
 message GenesisState {
   Params params = 1 [(gogoproto.nullable) = false];
   repeated Whatis whatisList = 2 [(gogoproto.nullable) = false];
+  repeated Loc locList = 3 [(gogoproto.nullable) = false];
   // this line is used by starport scaffolding # genesis/proto/state
 }
