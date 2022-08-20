@@ -5,6 +5,7 @@ import (
 
 	"acre/x/acre/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 func (k msgServer) CloseContract(goCtx context.Context, msg *types.MsgCloseContract) (*types.MsgCloseContractResponse, error) {
@@ -25,7 +26,7 @@ func (k msgServer) CloseContract(goCtx context.Context, msg *types.MsgCloseContr
 		k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, owner, price3)
 
 		// remove closed contract
-		k.RemoveLoc(ctx, loc)
+		k.RemoveLoc(ctx, loc.Index)
 	} else {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Contract has not been initiated.")
 	}
