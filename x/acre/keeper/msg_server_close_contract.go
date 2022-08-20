@@ -21,6 +21,7 @@ func (k msgServer) CloseContract(goCtx context.Context, msg *types.MsgCloseContr
 		price2, _ := sdk.ParseCoinsNormalized(loc.Price2)
 		price3, _ := sdk.ParseCoinsNormalized(loc.Price3)
 		k.bankKeeper.SendCoinsFromAccountToModule(ctx, buyer, types.ModuleName, price3)
+
 		k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, owner, price1)
 		k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, owner, price2)
 		k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, owner, price3)
