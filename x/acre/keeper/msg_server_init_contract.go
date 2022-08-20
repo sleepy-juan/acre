@@ -24,11 +24,12 @@ func (k msgServer) InitContract(goCtx context.Context, msg *types.MsgInitContrac
 		oldBuyer, _ := sdk.AccAddressFromBech32(loc.Buyer)
 
 		k.bankKeeper.SendCoinsFromAccountToModule(ctx, buyer, types.ModuleName, price1)
-		
+		k.bankKeeper.SendCoinsFromAccountToModule(ctx, owner, types.ModuleName, price1)
+
 		if oldBuyer.String() == "" {
 			newLoc := types.Loc{
 				Index:  loc.Index,
-				Cid: loc.Cid,
+				Cid:    loc.Cid,
 				Addr:   msg.Addr,
 				Owner:  owner.String(),
 				Buyer:  buyer.String(),
@@ -42,7 +43,7 @@ func (k msgServer) InitContract(goCtx context.Context, msg *types.MsgInitContrac
 		} else {
 			newLoc := types.Loc{
 				Index:  strconv.Itoa(int(count)),
-				Cid: strconv.Itoa(int(count)),
+				Cid:    strconv.Itoa(int(count)),
 				Addr:   msg.Addr,
 				Owner:  owner.String(),
 				Buyer:  buyer.String(),
@@ -56,7 +57,6 @@ func (k msgServer) InitContract(goCtx context.Context, msg *types.MsgInitContrac
 			k.SetLocCount(ctx, count+1)
 		}
 
-		
 	} else {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Property does not exist.")
 	}

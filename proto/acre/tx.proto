@@ -9,6 +9,7 @@ option go_package = "acre/x/acre/types";
 service Msg {
       rpc InitContract(MsgInitContract) returns (MsgInitContractResponse);
   rpc CreateContract(MsgCreateContract) returns (MsgCreateContractResponse);
+  rpc ProceedContract(MsgProceedContract) returns (MsgProceedContractResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -29,6 +30,14 @@ message MsgCreateContract {
 }
 
 message MsgCreateContractResponse {
+}
+
+message MsgProceedContract {
+  string creator = 1;
+  string addr = 2;
+}
+
+message MsgProceedContractResponse {
 }
 
 // this line is used by starport scaffolding # proto/tx/message

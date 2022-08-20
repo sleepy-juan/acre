@@ -20,6 +20,13 @@ export interface MsgCreateContract {
 
 export interface MsgCreateContractResponse {}
 
+export interface MsgProceedContract {
+  creator: string;
+  addr: string;
+}
+
+export interface MsgProceedContractResponse {}
+
 const baseMsgInitContract: object = { creator: "", addr: "" };
 
 export const MsgInitContract = {
@@ -319,13 +326,143 @@ export const MsgCreateContractResponse = {
   },
 };
 
+const baseMsgProceedContract: object = { creator: "", addr: "" };
+
+export const MsgProceedContract = {
+  encode(
+    message: MsgProceedContract,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.addr !== "") {
+      writer.uint32(18).string(message.addr);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgProceedContract {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgProceedContract } as MsgProceedContract;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.addr = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgProceedContract {
+    const message = { ...baseMsgProceedContract } as MsgProceedContract;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.addr !== undefined && object.addr !== null) {
+      message.addr = String(object.addr);
+    } else {
+      message.addr = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgProceedContract): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.addr !== undefined && (obj.addr = message.addr);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgProceedContract>): MsgProceedContract {
+    const message = { ...baseMsgProceedContract } as MsgProceedContract;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.addr !== undefined && object.addr !== null) {
+      message.addr = object.addr;
+    } else {
+      message.addr = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgProceedContractResponse: object = {};
+
+export const MsgProceedContractResponse = {
+  encode(
+    _: MsgProceedContractResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgProceedContractResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgProceedContractResponse,
+    } as MsgProceedContractResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgProceedContractResponse {
+    const message = {
+      ...baseMsgProceedContractResponse,
+    } as MsgProceedContractResponse;
+    return message;
+  },
+
+  toJSON(_: MsgProceedContractResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgProceedContractResponse>
+  ): MsgProceedContractResponse {
+    const message = {
+      ...baseMsgProceedContractResponse,
+    } as MsgProceedContractResponse;
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   InitContract(request: MsgInitContract): Promise<MsgInitContractResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   CreateContract(
     request: MsgCreateContract
   ): Promise<MsgCreateContractResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  ProceedContract(
+    request: MsgProceedContract
+  ): Promise<MsgProceedContractResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -348,6 +485,16 @@ export class MsgClientImpl implements Msg {
     const promise = this.rpc.request("acre.acre.Msg", "CreateContract", data);
     return promise.then((data) =>
       MsgCreateContractResponse.decode(new Reader(data))
+    );
+  }
+
+  ProceedContract(
+    request: MsgProceedContract
+  ): Promise<MsgProceedContractResponse> {
+    const data = MsgProceedContract.encode(request).finish();
+    const promise = this.rpc.request("acre.acre.Msg", "ProceedContract", data);
+    return promise.then((data) =>
+      MsgProceedContractResponse.decode(new Reader(data))
     );
   }
 }

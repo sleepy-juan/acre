@@ -1,12 +1,14 @@
 accounts:
-    - name: alice
+    - name: landlord
       coins: ["20000token", "200000000stake"]
-    - name: bob
+    - name: tenant1
       coins: ["10000token", "100000000stake"]
-    - name: chalie
+    - name: tenant2
+      coins: ["10000token", "100000000stake"]
+    - name: tenant3
       coins: ["10000token", "100000000stake"]
 validator:
-    name: alice
+    name: landlord
     staked: "100000000stake"
 client:
     openapi:
@@ -14,5 +16,5 @@ client:
     vuex:
         path: "vue/src/store"
 faucet:
-    name: bob
+    name: tenant1
     coins: ["5token", "100000stake"]

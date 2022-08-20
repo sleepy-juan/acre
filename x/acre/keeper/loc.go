@@ -54,6 +54,23 @@ func (k Keeper) GetLocWithAddr(ctx sdk.Context, addr string) (val types.Loc, fou
 	return val, false
 }
 
+func (k Keeper) GetLocWithAddrAndBuyer(ctx sdk.Context, addr string, buyer string) (val types.Loc, found bool) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.LocKeyPrefix))
+	iterator := sdk.KVStorePrefixIterator(store, []byte{})
+
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		var val types.Loc
+		k.cdc.MustUnmarshal(iterator.Value(), &val)
+		if val.Addr == addr && val.Buyer == buyer {
+			return val, true
+		}
+	}
+
+	return val, false
+}
+
 // RemoveLoc removes a loc from the store
 func (k Keeper) RemoveLoc(
 	ctx sdk.Context,
@@ -82,16 +99,34 @@ func (k Keeper) GetAllLoc(ctx sdk.Context) (list []types.Loc) {
 	return
 }
 
+
+func (k Keeper) GetAllLocWithAddrExceptMe(ctx sdk.Context, addr string, except_user string) (list []types.Loc) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.LocKeyPrefix))
+	iterator := sdk.KVStorePrefixIterator(store, []byte{})
+
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		var val types.Loc
+		k.cdc.MustUnmarshal(iterator.Value(), &val)
+		if val.Addr == addr && val.Buyer != except_user {
+			list = append(list, val)
+		}
+	}
+
+	return
+}
+
 // Adds
 
 func (k Keeper) GetLocCount(ctx sdk.Context) uint64 {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte(types.LocCountKey))
-  
+
 	byteKey := []byte(types.LocCountKey)
 	bz := store.Get(byteKey)
-  
+
 	if bz == nil {
-	  return 0
+		return 0
 	}
 
 	return binary.BigEndian.Uint64(bz)
@@ -99,11 +134,11 @@ func (k Keeper) GetLocCount(ctx sdk.Context) uint64 {
 
 func (k Keeper) SetLocCount(ctx sdk.Context, count uint64) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte(types.LocCountKey))
-  
+
 	byteKey := []byte(types.LocCountKey)
-  
+
 	bz := make([]byte, 8)
 	binary.BigEndian.PutUint64(bz, count)
-  
+
 	store.Set(byteKey, bz)
 }

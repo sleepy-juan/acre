@@ -25,6 +25,8 @@ export type AcreMsgCreateContractResponse = object;
 
 export type AcreMsgInitContractResponse = object;
 
+export type AcreMsgProceedContractResponse = object;
+
 /**
  * Params defines the parameters for the module.
  */
