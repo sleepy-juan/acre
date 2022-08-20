@@ -99,7 +99,6 @@ func (k Keeper) GetAllLoc(ctx sdk.Context) (list []types.Loc) {
 	return
 }
 
-
 func (k Keeper) GetAllLocWithAddrExceptMe(ctx sdk.Context, addr string, except_user string) (list []types.Loc) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.LocKeyPrefix))
 	iterator := sdk.KVStorePrefixIterator(store, []byte{})

@@ -21,6 +21,8 @@ export interface AcreLoc {
   status?: string;
 }
 
+export type AcreMsgCloseContractResponse = object;
+
 export type AcreMsgCreateContractResponse = object;
 
 export type AcreMsgInitContractResponse = object;

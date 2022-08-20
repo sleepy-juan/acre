@@ -315,6 +315,94 @@ func (m *MsgProceedContractResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgProceedContractResponse proto.InternalMessageInfo
 
+type MsgCloseContract struct {
+	Creator string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Addr    string `protobuf:"bytes,2,opt,name=addr,proto3" json:"addr,omitempty"`
+}
+
+func (m *MsgCloseContract) Reset()         { *m = MsgCloseContract{} }
+func (m *MsgCloseContract) String() string { return proto.CompactTextString(m) }
+func (*MsgCloseContract) ProtoMessage()    {}
+func (*MsgCloseContract) Descriptor() ([]byte, []int) {
+	return fileDescriptor_d282f75f018e8d92, []int{6}
+}
+func (m *MsgCloseContract) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgCloseContract) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgCloseContract.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgCloseContract) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgCloseContract.Merge(m, src)
+}
+func (m *MsgCloseContract) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgCloseContract) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgCloseContract.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgCloseContract proto.InternalMessageInfo
+
+func (m *MsgCloseContract) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgCloseContract) GetAddr() string {
+	if m != nil {
+		return m.Addr
+	}
+	return ""
+}
+
+type MsgCloseContractResponse struct {
+}
+
+func (m *MsgCloseContractResponse) Reset()         { *m = MsgCloseContractResponse{} }
+func (m *MsgCloseContractResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgCloseContractResponse) ProtoMessage()    {}
+func (*MsgCloseContractResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_d282f75f018e8d92, []int{7}
+}
+func (m *MsgCloseContractResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgCloseContractResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgCloseContractResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgCloseContractResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgCloseContractResponse.Merge(m, src)
+}
+func (m *MsgCloseContractResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgCloseContractResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgCloseContractResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgCloseContractResponse proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*MsgInitContract)(nil), "acre.acre.MsgInitContract")
 	proto.RegisterType((*MsgInitContractResponse)(nil), "acre.acre.MsgInitContractResponse")
@@ -322,12 +410,14 @@ func init() {
 	proto.RegisterType((*MsgCreateContractResponse)(nil), "acre.acre.MsgCreateContractResponse")
 	proto.RegisterType((*MsgProceedContract)(nil), "acre.acre.MsgProceedContract")
 	proto.RegisterType((*MsgProceedContractResponse)(nil), "acre.acre.MsgProceedContractResponse")
+	proto.RegisterType((*MsgCloseContract)(nil), "acre.acre.MsgCloseContract")
+	proto.RegisterType((*MsgCloseContractResponse)(nil), "acre.acre.MsgCloseContractResponse")
 }
 
 func init() { proto.RegisterFile("acre/tx.proto", fileDescriptor_d282f75f018e8d92) }
 
 var fileDescriptor_d282f75f018e8d92 = []byte{
-	// 299 bytes of a gzipped FileDescriptorProto
+	// 336 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x4d, 0x4c, 0x2e, 0x4a,
 	0xd5, 0x2f, 0xa9, 0xd0, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x04, 0x71, 0xf5, 0x40, 0x84,
 	0x92, 0x3d, 0x17, 0xbf, 0x6f, 0x71, 0xba, 0x67, 0x5e, 0x66, 0x89, 0x73, 0x7e, 0x5e, 0x49, 0x51,
@@ -338,15 +428,17 @@ var fileDescriptor_d282f75f018e8d92 = []byte{
 	0x78, 0x21, 0x31, 0x2e, 0xb6, 0x82, 0xa2, 0xcc, 0xe4, 0x54, 0x43, 0x09, 0x66, 0xb0, 0x28, 0x94,
 	0x07, 0x17, 0x37, 0x92, 0x60, 0x41, 0x12, 0x37, 0x82, 0x8b, 0x1b, 0x4b, 0xb0, 0x22, 0x89, 0x1b,
 	0x2b, 0x49, 0x73, 0x49, 0x62, 0x38, 0x05, 0xee, 0x50, 0x27, 0x2e, 0x21, 0xdf, 0xe2, 0xf4, 0x80,
-	0xa2, 0xfc, 0xe4, 0xd4, 0xd4, 0x14, 0x32, 0xc3, 0x41, 0x86, 0x4b, 0x0a, 0xd3, 0x0c, 0x98, 0x0d,
-	0x46, 0x2d, 0x4c, 0x5c, 0xcc, 0xbe, 0xc5, 0xe9, 0x42, 0x7e, 0x5c, 0x3c, 0x28, 0x61, 0x2d, 0xa5,
-	0x07, 0x8f, 0x0a, 0x3d, 0xb4, 0x60, 0x94, 0x52, 0xc2, 0x2d, 0x07, 0x33, 0x57, 0x28, 0x84, 0x8b,
-	0x0f, 0x2d, 0x78, 0x65, 0x50, 0x75, 0xa1, 0xca, 0x4a, 0xa9, 0xe0, 0x93, 0x85, 0x9b, 0x1a, 0xce,
-	0xc5, 0x8f, 0x1e, 0x18, 0xb2, 0xa8, 0x1a, 0xd1, 0xa4, 0xa5, 0x54, 0xf1, 0x4a, 0xc3, 0x0c, 0x76,
-	0xd2, 0x3e, 0xf1, 0x48, 0x8e, 0xf1, 0xc2, 0x23, 0x39, 0xc6, 0x07, 0x8f, 0xe4, 0x18, 0x27, 0x3c,
-	0x96, 0x63, 0xb8, 0xf0, 0x58, 0x8e, 0xe1, 0xc6, 0x63, 0x39, 0x86, 0x28, 0x41, 0x70, 0x0a, 0xad,
-	0xd0, 0x87, 0x24, 0xd4, 0xca, 0x82, 0xd4, 0xe2, 0x24, 0x36, 0x70, 0x62, 0x35, 0x06, 0x04, 0x00,
-	0x00, 0xff, 0xff, 0x32, 0x3a, 0x3e, 0xcb, 0xbd, 0x02, 0x00, 0x00,
+	0xa2, 0xfc, 0xe4, 0xd4, 0xd4, 0x14, 0x32, 0xc3, 0x41, 0x86, 0x4b, 0x0a, 0xd3, 0x0c, 0xb8, 0x0d,
+	0x0e, 0x5c, 0x02, 0x20, 0xeb, 0x73, 0xf2, 0x8b, 0xc9, 0x0c, 0x08, 0x25, 0x29, 0x2e, 0x09, 0x74,
+	0x13, 0x60, 0xa6, 0x1b, 0x5d, 0x67, 0xe2, 0x62, 0xf6, 0x2d, 0x4e, 0x17, 0xf2, 0xe3, 0xe2, 0x41,
+	0x89, 0x49, 0x29, 0x3d, 0x78, 0x44, 0xeb, 0xa1, 0x45, 0x92, 0x94, 0x12, 0x6e, 0x39, 0x98, 0xb9,
+	0x42, 0x21, 0x5c, 0x7c, 0x68, 0x91, 0x27, 0x83, 0xaa, 0x0b, 0x55, 0x56, 0x4a, 0x05, 0x9f, 0x2c,
+	0xdc, 0xd4, 0x70, 0x2e, 0x7e, 0xf4, 0xa0, 0x96, 0x45, 0xd5, 0x88, 0x26, 0x2d, 0xa5, 0x8a, 0x57,
+	0x1a, 0x6e, 0x70, 0x20, 0x17, 0x2f, 0x6a, 0x08, 0x4b, 0xa3, 0xb9, 0x07, 0x59, 0x52, 0x4a, 0x19,
+	0x8f, 0x24, 0xcc, 0x48, 0x27, 0xed, 0x13, 0x8f, 0xe4, 0x18, 0x2f, 0x3c, 0x92, 0x63, 0x7c, 0xf0,
+	0x48, 0x8e, 0x71, 0xc2, 0x63, 0x39, 0x86, 0x0b, 0x8f, 0xe5, 0x18, 0x6e, 0x3c, 0x96, 0x63, 0x88,
+	0x12, 0x04, 0x67, 0xa9, 0x0a, 0x7d, 0x48, 0xce, 0xaa, 0x2c, 0x48, 0x2d, 0x4e, 0x62, 0x03, 0xe7,
+	0x2e, 0x63, 0x40, 0x00, 0x00, 0x00, 0xff, 0xff, 0x0f, 0xf4, 0xbf, 0x80, 0x6e, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -364,6 +456,7 @@ type MsgClient interface {
 	InitContract(ctx context.Context, in *MsgInitContract, opts ...grpc.CallOption) (*MsgInitContractResponse, error)
 	CreateContract(ctx context.Context, in *MsgCreateContract, opts ...grpc.CallOption) (*MsgCreateContractResponse, error)
 	ProceedContract(ctx context.Context, in *MsgProceedContract, opts ...grpc.CallOption) (*MsgProceedContractResponse, error)
+	CloseContract(ctx context.Context, in *MsgCloseContract, opts ...grpc.CallOption) (*MsgCloseContractResponse, error)
 }
 
 type msgClient struct {
@@ -401,11 +494,21 @@ func (c *msgClient) ProceedContract(ctx context.Context, in *MsgProceedContract,
 	return out, nil
 }
 
+func (c *msgClient) CloseContract(ctx context.Context, in *MsgCloseContract, opts ...grpc.CallOption) (*MsgCloseContractResponse, error) {
+	out := new(MsgCloseContractResponse)
+	err := c.cc.Invoke(ctx, "/acre.acre.Msg/CloseContract", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	InitContract(context.Context, *MsgInitContract) (*MsgInitContractResponse, error)
 	CreateContract(context.Context, *MsgCreateContract) (*MsgCreateContractResponse, error)
 	ProceedContract(context.Context, *MsgProceedContract) (*MsgProceedContractResponse, error)
+	CloseContract(context.Context, *MsgCloseContract) (*MsgCloseContractResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -420,6 +523,9 @@ func (*UnimplementedMsgServer) CreateContract(ctx context.Context, req *MsgCreat
 }
 func (*UnimplementedMsgServer) ProceedContract(ctx context.Context, req *MsgProceedContract) (*MsgProceedContractResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProceedContract not implemented")
+}
+func (*UnimplementedMsgServer) CloseContract(ctx context.Context, req *MsgCloseContract) (*MsgCloseContractResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CloseContract not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -480,6 +586,24 @@ func _Msg_ProceedContract_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_CloseContract_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCloseContract)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CloseContract(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/acre.acre.Msg/CloseContract",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CloseContract(ctx, req.(*MsgCloseContract))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "acre.acre.Msg",
 	HandlerType: (*MsgServer)(nil),
@@ -495,6 +619,10 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ProceedContract",
 			Handler:    _Msg_ProceedContract_Handler,
+		},
+		{
+			MethodName: "CloseContract",
+			Handler:    _Msg_CloseContract_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -702,6 +830,66 @@ func (m *MsgProceedContractResponse) MarshalToSizedBuffer(dAtA []byte) (int, err
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgCloseContract) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgCloseContract) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgCloseContract) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Addr) > 0 {
+		i -= len(m.Addr)
+		copy(dAtA[i:], m.Addr)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Addr)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgCloseContractResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgCloseContractResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgCloseContractResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -795,6 +983,32 @@ func (m *MsgProceedContract) Size() (n int) {
 }
 
 func (m *MsgProceedContractResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgCloseContract) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Addr)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgCloseContractResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1374,6 +1588,170 @@ func (m *MsgProceedContractResponse) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: MsgProceedContractResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgCloseContract) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgCloseContract: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgCloseContract: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Addr", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Addr = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgCloseContractResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgCloseContractResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgCloseContractResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:

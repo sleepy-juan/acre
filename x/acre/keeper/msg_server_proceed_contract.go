@@ -26,7 +26,7 @@ func (k msgServer) ProceedContract(goCtx context.Context, msg *types.MsgProceedC
 		// 업데이트
 		loc.Status = "2"
 		k.SetLoc(ctx, loc)
-		
+
 		// 나머지 끊어버리기
 		cutContracts := k.GetAllLocWithAddrExceptMe(ctx, msg.Addr, msg.Creator)
 		for _, cont := range cutContracts {

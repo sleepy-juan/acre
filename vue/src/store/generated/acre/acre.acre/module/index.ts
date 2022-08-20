@@ -6,12 +6,14 @@ import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "
 import { Api } from "./rest";
 import { MsgProceedContract } from "./types/acre/tx";
 import { MsgInitContract } from "./types/acre/tx";
+import { MsgCloseContract } from "./types/acre/tx";
 import { MsgCreateContract } from "./types/acre/tx";
 
 
 const types = [
   ["/acre.acre.MsgProceedContract", MsgProceedContract],
   ["/acre.acre.MsgInitContract", MsgInitContract],
+  ["/acre.acre.MsgCloseContract", MsgCloseContract],
   ["/acre.acre.MsgCreateContract", MsgCreateContract],
   
 ];
@@ -47,6 +49,7 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
     msgProceedContract: (data: MsgProceedContract): EncodeObject => ({ typeUrl: "/acre.acre.MsgProceedContract", value: MsgProceedContract.fromPartial( data ) }),
     msgInitContract: (data: MsgInitContract): EncodeObject => ({ typeUrl: "/acre.acre.MsgInitContract", value: MsgInitContract.fromPartial( data ) }),
+    msgCloseContract: (data: MsgCloseContract): EncodeObject => ({ typeUrl: "/acre.acre.MsgCloseContract", value: MsgCloseContract.fromPartial( data ) }),
     msgCreateContract: (data: MsgCreateContract): EncodeObject => ({ typeUrl: "/acre.acre.MsgCreateContract", value: MsgCreateContract.fromPartial( data ) }),
     
   };
