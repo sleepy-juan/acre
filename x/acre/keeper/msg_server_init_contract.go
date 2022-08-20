@@ -25,11 +25,11 @@ func (k msgServer) InitContract(goCtx context.Context, msg *types.MsgInitContrac
 
 		notenoughbuyer := k.bankKeeper.SendCoinsFromAccountToModule(ctx, buyer, types.ModuleName, price1)
 		if notenoughbuyer != nil {
-			return nil, sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "The buyer does not have enough balance in the account.")
+			return nil, sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "<J>The buyer does not have enough balance in the account.<J>")
 		}
 		notenoughowner := k.bankKeeper.SendCoinsFromAccountToModule(ctx, owner, types.ModuleName, price1)
 		if notenoughowner != nil {
-			return nil, sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "The owner does not have enough balance in the account.")
+			return nil, sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "<J>The owner does not have enough balance in the account.<J>")
 		}
 
 		if oldBuyer.String() == "" {
@@ -64,7 +64,7 @@ func (k msgServer) InitContract(goCtx context.Context, msg *types.MsgInitContrac
 		}
 
 	} else {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Property does not exist.")
+		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "<J>Property does not exist.<J>")
 	}
 
 	return &types.MsgInitContractResponse{}, nil

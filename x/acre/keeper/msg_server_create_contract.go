@@ -16,7 +16,7 @@ func (k msgServer) CreateContract(goCtx context.Context, msg *types.MsgCreateCon
 	count := k.GetLocCount(ctx)
 
 	if isFound {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Property already exists.")
+		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "<J>Property already exists.<J>")
 	} else {
 		owner, _ := sdk.AccAddressFromBech32(msg.Creator)
 

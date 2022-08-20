@@ -22,7 +22,7 @@ func (k msgServer) CloseContract(goCtx context.Context, msg *types.MsgCloseContr
 		price3, _ := sdk.ParseCoinsNormalized(loc.Price3)
 		notenoughbuyer := k.bankKeeper.SendCoinsFromAccountToModule(ctx, buyer, types.ModuleName, price3)
 		if notenoughbuyer != nil {
-			return nil, sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "The buyer does not have enough balance in the account.")
+			return nil, sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "<J>The buyer does not have enough balance in the account.<J>")
 		}
 
 		k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, owner, price1)
@@ -32,7 +32,7 @@ func (k msgServer) CloseContract(goCtx context.Context, msg *types.MsgCloseContr
 		// remove closed contract
 		k.RemoveLoc(ctx, loc.Index)
 	} else {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Contract has not been initiated.")
+		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "<J>Contract has not been initiated.<J>")
 	}
 
 	return &types.MsgCloseContractResponse{}, nil

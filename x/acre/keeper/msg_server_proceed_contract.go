@@ -19,7 +19,7 @@ func (k msgServer) ProceedContract(goCtx context.Context, msg *types.MsgProceedC
 		price2, _ := sdk.ParseCoinsNormalized(loc.Price2)
 		notenoughbuyer := k.bankKeeper.SendCoinsFromAccountToModule(ctx, buyer, types.ModuleName, price2)
 		if notenoughbuyer != nil {
-			return nil, sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "The buyer does not have enough balance in the account.")
+			return nil, sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "<J>The buyer does not have enough balance in the account.<J>")
 		}
 
 		owner, _ := sdk.AccAddressFromBech32(loc.Owner)
@@ -41,7 +41,7 @@ func (k msgServer) ProceedContract(goCtx context.Context, msg *types.MsgProceedC
 			k.RemoveLoc(ctx, cont.Index)
 		}
 	} else {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Contract has not been initiated.")
+		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "<J>Contract has not been initiated.<J>")
 	}
 
 	return &types.MsgProceedContractResponse{}, nil
