@@ -20,7 +20,10 @@ func (k msgServer) CloseContract(goCtx context.Context, msg *types.MsgCloseContr
 		price1, _ := sdk.ParseCoinsNormalized(loc.Price1)
 		price2, _ := sdk.ParseCoinsNormalized(loc.Price2)
 		price3, _ := sdk.ParseCoinsNormalized(loc.Price3)
-		k.bankKeeper.SendCoinsFromAccountToModule(ctx, buyer, types.ModuleName, price3)
+		notenoughbuyer := k.bankKeeper.SendCoinsFromAccountToModule(ctx, buyer, types.ModuleName, price3)
+		if notenoughbuyer != nil {
+			return nil, sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "The buyer does not have enough balance in the account.")
+		}
 
 		k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, owner, price1)
 		k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, owner, price2)

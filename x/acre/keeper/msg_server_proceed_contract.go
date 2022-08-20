@@ -17,7 +17,10 @@ func (k msgServer) ProceedContract(goCtx context.Context, msg *types.MsgProceedC
 		// 돈 돌려주기
 		buyer, _ := sdk.AccAddressFromBech32(msg.Creator)
 		price2, _ := sdk.ParseCoinsNormalized(loc.Price2)
-		k.bankKeeper.SendCoinsFromAccountToModule(ctx, buyer, types.ModuleName, price2)
+		notenoughbuyer := k.bankKeeper.SendCoinsFromAccountToModule(ctx, buyer, types.ModuleName, price2)
+		if notenoughbuyer != nil {
+			return nil, sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "The buyer does not have enough balance in the account.")
+		}
 
 		owner, _ := sdk.AccAddressFromBech32(loc.Owner)
 		price1, _ := sdk.ParseCoinsNormalized(loc.Price1)

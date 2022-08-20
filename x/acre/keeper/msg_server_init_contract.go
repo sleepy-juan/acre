@@ -23,8 +23,14 @@ func (k msgServer) InitContract(goCtx context.Context, msg *types.MsgInitContrac
 
 		oldBuyer, _ := sdk.AccAddressFromBech32(loc.Buyer)
 
-		k.bankKeeper.SendCoinsFromAccountToModule(ctx, buyer, types.ModuleName, price1)
-		k.bankKeeper.SendCoinsFromAccountToModule(ctx, owner, types.ModuleName, price1)
+		notenoughbuyer := k.bankKeeper.SendCoinsFromAccountToModule(ctx, buyer, types.ModuleName, price1)
+		if notenoughbuyer != nil {
+			return nil, sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "The buyer does not have enough balance in the account.")
+		}
+		notenoughowner := k.bankKeeper.SendCoinsFromAccountToModule(ctx, owner, types.ModuleName, price1)
+		if notenoughowner != nil {
+			return nil, sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "The owner does not have enough balance in the account.")
+		}
 
 		if oldBuyer.String() == "" {
 			newLoc := types.Loc{
