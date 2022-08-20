@@ -1,0 +1,16 @@
+syntax = "proto3";
+package acre.acre;
+
+import "gogoproto/gogo.proto";
+import "acre/params.proto";
+import "acre/whatis.proto";
+// this line is used by starport scaffolding # genesis/proto/import
+
+option go_package = "acre/x/acre/types";
+
+// GenesisState defines the acre module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+  repeated Whatis whatisList = 2 [(gogoproto.nullable) = false];
+  // this line is used by starport scaffolding # genesis/proto/state
+}

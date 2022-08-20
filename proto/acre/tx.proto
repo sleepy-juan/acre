@@ -1,0 +1,34 @@
+syntax = "proto3";
+package acre.acre;
+
+// this line is used by starport scaffolding # proto/tx/import
+
+option go_package = "acre/x/acre/types";
+
+// Msg defines the Msg service.
+service Msg {
+      rpc InitContract(MsgInitContract) returns (MsgInitContractResponse);
+  rpc CreateContract(MsgCreateContract) returns (MsgCreateContractResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgInitContract {
+  string creator = 1;
+  string addr = 2;
+}
+
+message MsgInitContractResponse {
+}
+
+message MsgCreateContract {
+  string creator = 1;
+  string addr = 2;
+  string price1 = 3;
+  string price2 = 4;
+  string price3 = 5;
+}
+
+message MsgCreateContractResponse {
+}
+
+// this line is used by starport scaffolding # proto/tx/message
