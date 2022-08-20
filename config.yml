@@ -2,7 +2,7 @@ accounts:
     - name: landlord
       coins: ["20000token", "200000000stake"]
     - name: tenant1
-      coins: ["11token", "100000000stake"]
+      coins: ["10000token", "100000000stake"]
     - name: tenant2
       coins: ["10000token", "100000000stake"]
     - name: tenant3

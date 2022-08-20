@@ -30917,6 +30917,10 @@ definitions:
         type: string
       status:
         type: string
+  acre.acre.MsgCancelContractResponse:
+    type: object
+  acre.acre.MsgCloseContractResponse:
+    type: object
   acre.acre.MsgCreateContractResponse:
     type: object
   acre.acre.MsgInitContractResponse:

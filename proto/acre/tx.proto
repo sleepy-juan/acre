@@ -11,6 +11,7 @@ service Msg {
   rpc CreateContract(MsgCreateContract) returns (MsgCreateContractResponse);
   rpc ProceedContract(MsgProceedContract) returns (MsgProceedContractResponse);
   rpc CloseContract(MsgCloseContract) returns (MsgCloseContractResponse);
+  rpc CancelContract(MsgCancelContract) returns (MsgCancelContractResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -47,6 +48,14 @@ message MsgCloseContract {
 }
 
 message MsgCloseContractResponse {
+}
+
+message MsgCancelContract {
+  string creator = 1;
+  string addr = 2;
+}
+
+message MsgCancelContractResponse {
 }
 
 // this line is used by starport scaffolding # proto/tx/message
