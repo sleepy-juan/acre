@@ -4,19 +4,19 @@ import { StdFee } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
+import { MsgCloseContract } from "./types/acre/tx";
+import { MsgProceedContract } from "./types/acre/tx";
 import { MsgInitContract } from "./types/acre/tx";
 import { MsgCancelContract } from "./types/acre/tx";
 import { MsgCreateContract } from "./types/acre/tx";
-import { MsgProceedContract } from "./types/acre/tx";
-import { MsgCloseContract } from "./types/acre/tx";
 
 
 const types = [
+  ["/acre.acre.MsgCloseContract", MsgCloseContract],
+  ["/acre.acre.MsgProceedContract", MsgProceedContract],
   ["/acre.acre.MsgInitContract", MsgInitContract],
   ["/acre.acre.MsgCancelContract", MsgCancelContract],
   ["/acre.acre.MsgCreateContract", MsgCreateContract],
-  ["/acre.acre.MsgProceedContract", MsgProceedContract],
-  ["/acre.acre.MsgCloseContract", MsgCloseContract],
   
 ];
 export const MissingWalletError = new Error("wallet is required");
@@ -49,11 +49,11 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
 
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
+    msgCloseContract: (data: MsgCloseContract): EncodeObject => ({ typeUrl: "/acre.acre.MsgCloseContract", value: MsgCloseContract.fromPartial( data ) }),
+    msgProceedContract: (data: MsgProceedContract): EncodeObject => ({ typeUrl: "/acre.acre.MsgProceedContract", value: MsgProceedContract.fromPartial( data ) }),
     msgInitContract: (data: MsgInitContract): EncodeObject => ({ typeUrl: "/acre.acre.MsgInitContract", value: MsgInitContract.fromPartial( data ) }),
     msgCancelContract: (data: MsgCancelContract): EncodeObject => ({ typeUrl: "/acre.acre.MsgCancelContract", value: MsgCancelContract.fromPartial( data ) }),
     msgCreateContract: (data: MsgCreateContract): EncodeObject => ({ typeUrl: "/acre.acre.MsgCreateContract", value: MsgCreateContract.fromPartial( data ) }),
-    msgProceedContract: (data: MsgProceedContract): EncodeObject => ({ typeUrl: "/acre.acre.MsgProceedContract", value: MsgProceedContract.fromPartial( data ) }),
-    msgCloseContract: (data: MsgCloseContract): EncodeObject => ({ typeUrl: "/acre.acre.MsgCloseContract", value: MsgCloseContract.fromPartial( data ) }),
     
   };
 };
