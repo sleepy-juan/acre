@@ -15,7 +15,7 @@ func (k msgServer) InitContract(goCtx context.Context, msg *types.MsgInitContrac
 	loc, isFound := k.GetLocWithAddr(ctx, msg.Addr)
 	count := k.GetLocCount(ctx)
 
-	if isFound {
+	if isFound && loc.Status != "2" {
 		price1, _ := sdk.ParseCoinsNormalized(loc.Price1)
 
 		owner, _ := sdk.AccAddressFromBech32(loc.Owner)
@@ -64,7 +64,10 @@ func (k msgServer) InitContract(goCtx context.Context, msg *types.MsgInitContrac
 		}
 
 	} else {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "<J>Property does not exist.<J>")
+		if isFound && loc.Status != "2" {
+			return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "<J>Unauthorized Contract: Another contract is ongoing.<J>")
+		}
+		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "<J>Unauthorized Contract: Property is not initialized.<J>")
 	}
 
 	return &types.MsgInitContractResponse{}, nil
