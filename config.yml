@@ -13,8 +13,6 @@ validator:
 client:
     openapi:
         path: "docs/static/openapi.yml"
-    vuex:
-        path: "vue/src/store"
 faucet:
     name: buyer1
     coins: ["5token", "100000stake"]
